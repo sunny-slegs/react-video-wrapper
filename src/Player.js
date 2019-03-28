@@ -11,7 +11,8 @@ class Player extends Component {
       mute: false,
       captions: false,
       playedSeconds: 0,
-      loadedSeconds: 0
+      loadedSeconds: 0,
+      duration: 0
     }
 
   }
@@ -58,8 +59,7 @@ class Player extends Component {
       })
     }
   }
-    
-// Decrease volume
+  // Decrease volume
   decVolume = () => {
     if (this.state.volume <= .1 ) {
       console.log("The volume can't go any lower") 
@@ -77,7 +77,7 @@ class Player extends Component {
       mute: !muteStatus
     })
   }
-// Toggle captions state
+  // Toggle captions state
     captions = () => {
       const captionState = this.state.captions;
       this.setState({
@@ -91,19 +91,39 @@ class Player extends Component {
 
     onProgress = e => {
       console.log(e)
-      this.setState(e)
+      if (!this.state.seeking) {
+        this.setState(e)
+      }
     }
-// Jump forward 10 seconds
-    seekForward = () => {
+  // Jump forward 10 seconds
+    jumpForward = () => {
       this.player.seekTo(this.state.playedSeconds + 10)
     }
 
-// Jump back 10 seconds
-seekBack = () => {
-  this.player.seekTo(this.state.playedSeconds - 10)
-}
-// Seek within the video and see the progress
-// Show the seconds elapsed and the duration
+  // Jump back 10 seconds
+    jumpBack = () => {
+      this.player.seekTo(this.state.playedSeconds - 10)
+    }
+  // Seek within the video and see the progress
+    seekMouseDown = () => {
+      this.setState({seeking: true})
+    }
+
+    seekMouseUp = (e) => {
+      this.setState({seeking: false})
+      this.player.seekTo(parseFloat(e.target.value))
+    }
+
+    onSeekChange = (e) => {
+      console.log(e.target.value)
+      this.setState({played: parseFloat(e.target.value)})
+    }
+  // Show the seconds elapsed and the duration
+    onDuration = (e) => {
+      console.log(e)
+      this.setState({duration: e})
+    }
+
   render() {
   // Toggle mute/unmute button
     if (this.state.mute === false) {
@@ -111,7 +131,7 @@ seekBack = () => {
     } else {
       this.muteButton = "Unmute"
     }
-//Toggle caption show/hide button and config setting
+  //Toggle caption show/hide button and config setting
     if (this.state.captions === false) {
         this.config = {file: {}}
         this.captionButton = "Show Closed Captions"
@@ -148,8 +168,15 @@ seekBack = () => {
           <button onClick={this.decVolume}>-</button>
           <button onClick={this.mute}>{this.muteButton}</button>
           <button onClick={this.captions}>{this.captionButton}</button>
-          <button onClick={this.seekForward}>Jump Forward 10 Seconds</button>
-          <button onClick={this.seekBack}>Jump Back 10 Seconds</button>
+          <button onClick={this.jumForward}>Jump Forward 10 Seconds</button>
+          <button onClick={this.jumpBack}>Jump Back 10 Seconds</button>
+          <label htmlFor="played">Played</label>
+          <progress name="played" value={this.state.playedSeconds} max={this.state.duration}>Played</progress>
+          <input type="range" name="seek" min={0} max={this.state.duration} step="any" 
+          value={this.state.played}
+          onMouseDown={this.seekMouseDown}
+          onChange={this.onSeekChange}
+          onMouseUp={this.seekMouseUp}></input>
         </React.Fragment>
       )
     }
