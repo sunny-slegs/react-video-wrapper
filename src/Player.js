@@ -19,24 +19,17 @@ class Player extends Component {
   }
   
   play = () => {
-    this.setState ({
-      playing: true
-
-    })
+    this.setState ({playing: true})
   
   }
   pause = () => {
-    this.setState({
-      playing: false
-    })
+    this.setState({playing: false})
   }
   
   // Decrease playback rate
   incPlaybackRate = () => {
     const newRate = this.state.playbackRate + 1;
-    this.setState({
-      playbackRate: newRate
-    });
+    this.setState({playbackRate: newRate});
   }
   // Increase playback rate
   decPlaybackRate = () => {
@@ -44,9 +37,7 @@ class Player extends Component {
       console.log("You cannot set a slower speed")
     } else {
       const newRate = this.state.playbackRate - 1;
-      this.setState({
-        playbackRate: newRate
-      });
+      this.setState({playbackRate: newRate});
     }
   }
   // Increase volume
@@ -55,9 +46,7 @@ class Player extends Component {
       console.log("The volume can't go any higher")
     } else {
       const newVolume = this.state.volume + .1;
-      this.setState({
-        volume: newVolume
-      })
+      this.setState({volume: newVolume})
     }
   }
   // Decrease volume
@@ -66,24 +55,18 @@ class Player extends Component {
       console.log("The volume can't go any lower") 
     } else {
       const newVolume = this.state.volume - .1;
-      this.setState({ 
-        volume: newVolume
-      })
+      this.setState({volume: newVolume})
     }
   }
   // Toggle mute state
   mute = () => {
     const muteStatus =  this.state.mute;
-    this.setState({
-      mute: !muteStatus
-    })
+    this.setState({mute: !muteStatus})
   }
   // Toggle captions state
     captions = () => {
       const captionState = this.state.captions;
-      this.setState({
-        captions: !captionState
-      })
+      this.setState({captions: !captionState})
     }
 
     ref = player => {
@@ -91,7 +74,6 @@ class Player extends Component {
     }
 
     onProgress = e => {
-      console.log(e)
       if (!this.state.seeking) {
         this.setState(e)
       }
@@ -116,12 +98,10 @@ class Player extends Component {
     }
 
     onSeekChange = (e) => {
-      console.log(e.target.value)
       this.setState({played: parseFloat(e.target.value)})
     }
   // Show the seconds elapsed and the duration
     onDuration = (e) => {
-      console.log(e)
       this.setState({duration: e})
     }
 
@@ -155,7 +135,7 @@ class Player extends Component {
         width="100%"
         heigth="100%" 
         ref={this.ref}
-        loop="true"
+        loop={true}
         playing={playing}  
         playbackRate={playbackRate} 
         volume={volume} 
