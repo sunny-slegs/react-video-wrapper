@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "./Player.css";
 import ReactPlayer from 'react-player';
 
 class Player extends Component {
@@ -145,40 +146,47 @@ class Player extends Component {
     };
 
     
-    const { playing, playbackRate, volume, mute } = this.state
+    const { playing, playbackRate, volume, mute, playedSeconds, played, duration } = this.state
     
     return (
-      <React.Fragment>
-        <ReactPlayer url='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' 
+      <div className="player-wrapper">
+        <ReactPlayer url='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'
+        className="react-player"
+        width="100%"
+        heigth="100%" 
         ref={this.ref}
+        loop="true"
         playing={playing}  
         playbackRate={playbackRate} 
-        volume={this.state.volume} 
-        muted={this.state.mute}
+        volume={volume} 
+        muted={mute}
         onDuration={this.onDuration}
         onProgress={this.onProgress}
         onSeek={this.onSeek}
         config={this.config}
         />
-        <button onClick={this.play}>Play</button>
-        <button onClick={this.pause}>Pause</button>
-        <button onClick={this.incPlaybackRate}>Increase Playback Rate</button>
-        <button onClick={this.decPlaybackRate}>Decrease Playback Rate</button>
-        <button onClick={this.incVolume}>+</button>
-        <span>Volume</span>
-        <button onClick={this.decVolume}>-</button>
-        <button onClick={this.mute}>{this.muteButton}</button>
-        <button onClick={this.captions}>{this.captionButton}</button>
-        <button onClick={this.jumForward}>Jump Forward 10 Seconds</button>
-        <button onClick={this.jumpBack}>Jump Back 10 Seconds</button>
-        <label htmlFor="played">Played</label>
-        <progress name="played" value={this.state.playedSeconds} max={this.state.duration}>Played</progress>
-        <input type="range" name="seek" min={0} max={this.state.duration} step="any" 
-        value={this.state.played}
-        onMouseDown={this.seekMouseDown}
-        onChange={this.onSeekChange}
-        onMouseUp={this.seekMouseUp}></input>
-      </React.Fragment>
+        <div className="controls">
+          <button className="green" onClick={this.play}>Play</button>
+          <button className="green" onClick={this.pause}>Pause</button>
+          <button className="blue" onClick={this.incPlaybackRate}>Speed ++</button>
+          <button className="blue" onClick={this.decPlaybackRate}>Speed --</button>
+          <button className="green" onClick={this.incVolume}>+</button>
+          <span className="green">Volume</span>
+          <button className="green" onClick={this.decVolume}>-</button>
+          <button className="red" onClick={this.mute}>{this.muteButton}</button>
+          <button className="orange" onClick={this.captions}>{this.captionButton}</button>
+          <button className="blue" onClick={this.jumForward}>Jump Forward 10 Seconds</button>
+          <button className="blue" onClick={this.jumpBack}>Jump Back 10 Seconds</button>
+          <label className="green" htmlFor="played">Played</label>
+          <progress name="played" value={playedSeconds} max={duration}>Played</progress>
+          <label className="green" htmlFor="seek">Seek</label>
+          <input type="range" name="seek" min={0} max={duration} step="any" 
+          value={played}
+          onMouseDown={this.seekMouseDown}
+          onChange={this.onSeekChange}
+          onMouseUp={this.seekMouseUp}></input>
+        </div>
+      </div>
       )
     }
   }

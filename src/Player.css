@@ -1,0 +1,45 @@
+.player-wrapper {
+  position: relative;
+  padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */
+}
+
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+button, span, label {
+  position: relative;
+  color: white;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  margin: 4px;
+  border: 1PX solid black;
+}
+
+ span, label{
+   text-align: center;
+ }
+
+.green {
+  background: rgb(28, 184, 65)
+}
+
+.red {
+  background: rgb(202, 60, 60);
+}
+
+.blue {
+  background: rgb(66, 184, 221);
+}
+
+.orange {
+  background: rgb(223, 117, 20);
+}
+
+.first {
+  display: block;
+}
