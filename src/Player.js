@@ -6,26 +6,22 @@ class Player extends Component {
     super(props);
     this.state = {
       playing: false,
-      playbackRate: 1
+      playbackRate: 1,
+      volume: .5,
     }
 
-   
-
   }
-
-
-
-
-  
   
   render() {
-    const playVideo = () => {
+
+    const play = () => {
       this.setState ({
         playing: true
+  
       })
     
     }
-    const pauseVideo = () => {
+    const pause = () => {
       this.setState({
         playing: false
       })
@@ -47,14 +43,41 @@ class Player extends Component {
         });
       }
     }
+
+    const incVolume = () => {
+      console.log(this.state.volume)
+      if (this.state.volume >= .9) {
+        console.log("You cannot increase the volume, be kind to your ears!")
+      } else {
+        const newVolume = this.state.volume + .1;
+        this.setState({
+          volume: newVolume
+        })
+      }
+    }
+
+    const decVolume = () => {
+      if (this.state.volume <= .1 ) {
+        console.log("The volume can't get any lower") 
+      } else {
+        const newVolume = this.state.volume - .1;
+        this.setState({ 
+          volume: newVolume
+        })
+      }
+    }
   
     return (
         <React.Fragment>
-          <ReactPlayer url='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' playing={this.state.playing}  playbackRate={this.state.playbackRate}/>
-          <button onClick={playVideo}>Play</button>
-          <button onClick={pauseVideo}>Pause</button>
+          <ReactPlayer url='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' playing={this.state.playing}  
+          playbackRate={this.state.playbackRate} volume={this.state.volume}/>
+          <button onClick={play}>Play</button>
+          <button onClick={pause}>Pause</button>
           <button onClick={incPlaybackRate}>Increase Playback Rate</button>
           <button onClick={decPlaybackRate}>Decrease Playback Rate</button>
+          <button onClick={incVolume}>+</button>
+          <span>Volume</span>
+          <button onClick={decVolume}>-</button>
         </React.Fragment>
       )
     }
