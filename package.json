@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://sunny-slegs.github.io/react-video-wrapper",
   "dependencies": {
+    "gh-pages": "^2.0.1",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-player": "^1.10.0",
