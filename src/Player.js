@@ -9,7 +9,7 @@ class Player extends Component {
       playbackRate: 1,
       volume: .5,
       mute: false,
-      subtitles: false,
+      captions: false,
     }
 
   }
@@ -47,7 +47,6 @@ class Player extends Component {
     }
 
     const incVolume = () => {
-      console.log(this.state.volume)
       if (this.state.volume >= .9) {
         console.log("The volume can't go any higher")
       } else {
@@ -60,7 +59,7 @@ class Player extends Component {
 
     const decVolume = () => {
       if (this.state.volume <= .1 ) {
-        console.log("The volume can't get any lower") 
+        console.log("The volume can't go any lower") 
       } else {
         const newVolume = this.state.volume - .1;
         this.setState({ 
@@ -68,37 +67,37 @@ class Player extends Component {
         })
       }
     }
-
+// toggle mute state
     const mute = () => {
       const muteStatus =  this.state.mute;
       this.setState({
         mute: !muteStatus
       })
     }
-  
+  // Toggle mute/unmute button
     if (this.state.mute === false) {
       this.muteButton = "Mute"
     } else {
       this.muteButton = "Unmute"
     }
-
-    const subtitles = () => {
-      const subtitleState = this.state.subtitles;
+// Toggle captions state
+    const captions = () => {
+      const captionState = this.state.captions;
       this.setState({
-        subtitles: !subtitleState
+        captions: !captionState
       })
     }
-
-    if (this.state.subtitles === false) {
+//Toggle caption show/hide button and config setting
+    if (this.state.captions === false) {
         this.config = {file: {}}
-        this.subtitleButton = "Show Closed Captions"
+        this.captionsButton = "Show Closed Captions"
     } else {
        this.config = {file: {
           tracks: [
             {kind: 'captions', src: '/Users/sonyaslegers/Desktop/touch-to/src/audio-eng.vtt', srcLang: "en", default: true}
           ]
         }};
-        this.subtitleButton = "Hide Closed Captions"
+        this.captionButton = "Hide Closed Captions"
     };
     
     return (
@@ -114,7 +113,7 @@ class Player extends Component {
           <span>Volume</span>
           <button onClick={decVolume}>-</button>
           <button onClick={mute}>{this.muteButton}</button>
-          <button onClick={subtitles}>{this.subtitleButton}</button>
+          <button onClick={captions}>{this.captionButton}</button>
         </React.Fragment>
       )
     }
