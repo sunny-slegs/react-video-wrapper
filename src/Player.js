@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
-import { Slider, Direction } from 'react-player-controls'
 
 class Player extends Component {
   constructor(props) {
@@ -11,6 +10,8 @@ class Player extends Component {
       volume: .5,
       mute: false,
       captions: false,
+      playedSeconds: 0,
+      loadedSeconds: 0
     }
 
   }
@@ -83,9 +84,24 @@ class Player extends Component {
         captions: !captionState
       })
     }
-// Jump back 10 seconds
-onDuration
+
+    ref = player => {
+      this.player = player
+    }
+
+    onProgress = e => {
+      console.log(e)
+      this.setState(e)
+    }
 // Jump forward 10 seconds
+    seekForward = () => {
+      this.player.seekTo(this.state.playedSeconds + 10)
+    }
+
+// Jump back 10 seconds
+seekBack = () => {
+  this.player.seekTo(this.state.playedSeconds - 10)
+}
 // Seek within the video and see the progress
 // Show the seconds elapsed and the duration
   render() {
@@ -107,12 +123,22 @@ onDuration
         }};
         this.captionButton = "Hide Closed Captions"
     };
+
+    
     
     return (
         <React.Fragment>
-          <ReactPlayer url='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' playing={this.state.playing}  
-          playbackRate={this.state.playbackRate} volume={this.state.volume} muted={this.state.mute}
-          config={this.config}/>
+          <ReactPlayer url='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' 
+          ref={this.ref}
+          playing={this.state.playing}  
+          playbackRate={this.state.playbackRate} 
+          volume={this.state.volume} 
+          muted={this.state.mute}
+          onDuration={this.onDuration}
+          onProgress={this.onProgress}
+          onSeek={this.onSeek}
+          config={this.config}
+          />
           <button onClick={this.play}>Play</button>
           <button onClick={this.pause}>Pause</button>
           <button onClick={this.incPlaybackRate}>Increase Playback Rate</button>
@@ -122,6 +148,8 @@ onDuration
           <button onClick={this.decVolume}>-</button>
           <button onClick={this.mute}>{this.muteButton}</button>
           <button onClick={this.captions}>{this.captionButton}</button>
+          <button onClick={this.seekForward}>Jump Forward 10 Seconds</button>
+          <button onClick={this.seekBack}>Jump Back 10 Seconds</button>
         </React.Fragment>
       )
     }
